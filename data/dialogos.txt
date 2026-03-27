@@ -25,4 +25,4 @@
 [CENA_PARCEIRO] > Parceiro: Parece que o ultimo local do suspeito foi em um bar...
 
 [BAR_BARMEN_RUIM] > Barmen: Quem voce acha que eu sou ? Sai daqui agora, nao tenho nada a dizer.
-[BAR_BARMEN_BOM] > Barmen: Como voce sabe disso?
+[BAR_BARMEN_BOM] > [NEW]Barmen: Como voce sabe disso?

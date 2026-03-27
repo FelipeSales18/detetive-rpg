@@ -234,9 +234,9 @@ void GameManager::processarBar(int escolha) {
 
 void GameManager::iniciarInvestigacao() {
     printTypewriter("Iniciando inicializacao do sistema...", 50);
+    exibirIntroducao();
     
     while (isRunning) {
-        exibirIntroducao();
         exibirMenu();
         
         int escolha;

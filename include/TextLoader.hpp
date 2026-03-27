@@ -8,6 +8,7 @@ private:
 
 public:
 bool carregarArquivo(const std::string&caminho); // coloquei pra chave e outro pro valor.
-std::string getTexto(const std::string&tag);
+std::string getTexto(const std::string&tag); // const significa que a variavel nao sera alterada
+std::string pintarLetra(std::string texto);
 
 };
