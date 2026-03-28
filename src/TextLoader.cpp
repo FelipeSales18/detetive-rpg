@@ -43,9 +43,17 @@ std::string TextLoader::getTexto(const std::string& tag) {
     std::string TextLoader::pintarLetra(std::string texto){
         size_t pNew = texto.find("[NEW]");
 
-        if(pNew != std::string::npos){
+        if(pNew!= std::string::npos){
             texto.replace(pNew, 5, "\033[1;33m[NEW]\033[0m");
 
         }
+        size_t pOver = texto.find("[GAME_OVER]");
+
+        if(pOver != std::string::npos){
+            texto.replace(pOver, 11, "\033[1;31m[GAME_OVER]\033[0m");
+
+        }
         return texto;
+
+
     }

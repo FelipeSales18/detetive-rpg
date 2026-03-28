@@ -9,6 +9,7 @@ GameManager::GameManager() {
     cena = MAPA;
     achouAgulha = false;
     pegouCracha = false;
+    vida = 100;
 
     // carregando o arquivo de textos
     leitor.carregarArquivo("data/dialogos.txt");
@@ -38,7 +39,13 @@ void GameManager::exibirIntroducao(){
 
 }
 
+void GameManager::vidaDetetive(){
+    if(vida <= 0){
+        printTypewriter(leitor.getTexto("[PERDEU]"),50);
+        isRunning = false;
 
+    }
+}
 
 
 void GameManager::exibirMenu() {
@@ -194,8 +201,10 @@ void GameManager::processarCena(int escolha) {
         printTypewriter(leitor.getTexto("[CENA_CHAO]"), 50);
     } else if (escolha == 2) {
         cena = MAPA; 
+        vida = vida - 100;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[CENA_PARCEIRO]"), 50);
+        vidaDetetive();
     } else if (escolha == 3) {
         cena = MAPA; 
         std::cout << '\n';
