@@ -26,3 +26,5 @@
 
 [BAR_BARMEN_RUIM] > Barmen: Quem voce acha que eu sou ? Sai daqui agora, nao tenho nada a dizer.
 [BAR_BARMEN_BOM] > [NEW]Barmen: Como voce sabe disso?
+
+[PERDEU] > [GAME_OVER]

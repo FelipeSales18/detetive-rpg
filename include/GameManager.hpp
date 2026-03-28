@@ -22,6 +22,7 @@ private:
     bool achouAgulha;
     bool pegouCracha;
     TextLoader leitor;
+    int vida;
     
     // Funcoes internas que ajudam a organizar o codigo
     void printTypewriter(const std::string& text, int delay_ms);
@@ -50,6 +51,8 @@ private:
 
     void menuBar();
     void processarBar(int escolha);
+
+    void vidaDetetive();
     
 public:
     GameManager(); // Construtor
