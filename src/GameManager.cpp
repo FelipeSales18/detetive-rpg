@@ -6,9 +6,11 @@
 // O construtor define que o jogo comeca rodando
 GameManager::GameManager() {
     isRunning = true;
-    cena = MAPA;
+    cena = PERSONAGENS;
     achouAgulha = false;
     pegouCracha = false;
+    pegouDistintivo = false;
+    pistaHospital = false;
     vida = 100;
 
     // carregando o arquivo de textos
@@ -39,6 +41,44 @@ void GameManager::exibirIntroducao(){
 
 }
 
+void GameManager::exibirPersonagens(){
+    std::cout << "\n === CONHECA OS SEUS COLEGAS === \n";
+    std::cout << "1. Coronel\n";
+    std::cout << "2. Parceiro\n";
+    std::cout << "3. Secretaria\n";
+    std::cout << "4. Ir para cena do crime\n";
+
+}
+void GameManager::processarPersonagens(int escolha){
+    if(escolha == 1){
+        cena = PERSONAGENS;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[CORONEL_INTRODUCAO]"),50);
+    }else if(escolha == 2){
+        cena = PERSONAGENS;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[PARCEIRO_INTRODUCAO]"),50);
+
+    }else if(escolha == 3){
+        cena = PERSONAGENS;
+        pegouDistintivo = true;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[SECRETARIA_INTRODUCAO]"),50);
+
+    } else if (escolha == 4 && pegouDistintivo == true) {
+        cena = CENA_DO_CRIME; 
+        std::cout << '\n';
+        printTypewriter(leitor.getTexto("[MAPA_CENA]"), 50);
+    }else if(escolha == 4 && pegouDistintivo == false){
+        cena = PERSONAGENS;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[PEGUE_CRACHA]"),50);
+
+    } else {
+        std::cout << '\n' << leitor.getTexto("[GERAL_INVALIDO]") << '\n';
+    }
+}
+
 void GameManager::vidaDetetive(){
     if(vida <= 0){
         printTypewriter(leitor.getTexto("[PERDEU]"),50);
@@ -49,8 +89,8 @@ void GameManager::vidaDetetive(){
 
 
 void GameManager::exibirMenu() {
-    limpaTerminal();
     switch (cena) {
+        case PERSONAGENS: exibirPersonagens(); break;
         case MAPA: menuMapa();       break;
         case DELEGACIA: menuDelegacia();  break;
         case HOSPITAL: menuHospital(); break;
@@ -69,6 +109,7 @@ void GameManager::processarEscolha(int escolha) {
         case BAR: processarBar(escolha); break;
         case CENA_DO_CRIME: processarCena(escolha); break;
         case CASA: processarCasa(escolha); break;
+        case PERSONAGENS: processarPersonagens(escolha); break;
         default: break;
     }
 }
@@ -93,10 +134,15 @@ void GameManager::processarMapa(int escolha) {
         cena = CASA;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[MAPA_CASA]"), 50);
-    } else if (escolha == 3) {
+    } else if (escolha == 3 && pistaHospital == true) {
         cena = HOSPITAL;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[MAPA_HOSPITAL]"), 50);
+    } else if(escolha == 3 && pistaHospital == false){
+        cena = MAPA;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[ACESSO_NEGADO]"),50);
+
     } else if (escolha == 4) {
         cena = CENA_DO_CRIME;
         std::cout << '\n';
@@ -123,10 +169,11 @@ void GameManager::menuDelegacia(){
 
 void GameManager::processarDelegacia(int escolha) {
     if (escolha == 1) {
+        cena = DELEGACIA;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[DELEGACIA_CORONEL]"), 50);
     } else if (escolha == 2) {
-        cena = MAPA; 
+        cena = DELEGACIA; 
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[DELEGACIA_PARCEIRO]"), 50);
     } else if (escolha == 3) {
@@ -147,10 +194,11 @@ void GameManager::menuHospital(){
 
 void GameManager::processarHospital(int escolha) {
     if (escolha == 1) {
+        cena = HOSPITAL;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[HOSPITAL_SECRETARIA]"), 50);
     } else if (escolha == 2) {
-        cena = MAPA; 
+        cena = HOSPITAL; 
         pegouCracha = true;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[HOSPITAL_CRACHA]"), 50);
@@ -172,10 +220,11 @@ void GameManager::menuCasa(){
 
 void GameManager::processarCasa(int escolha) {
     if (escolha == 1) {
+        cena = CASA;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[CASA_TV]"), 50);
     } else if (escolha == 2) {
-        cena = MAPA; 
+        cena = CASA; 
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[CASA_JANELA]"), 50);
     } else if (escolha == 3) {
@@ -189,23 +238,30 @@ void GameManager::processarCasa(int escolha) {
 
 void GameManager::menuCena(){
     std::cout << "\n === CENA DO CRIME===\n";
-    std::cout << "1. Vasculhar o chao.\n";
+    std::cout << "1. Falar com o socorrista.\n";
     std::cout << "2. Falar com o seu parceiro.\n";
-    std::cout << "3. Voltar para o carro\n";
+    std::cout << "3. Vasculhar o chao.\n";
+    std::cout << "4. Voltar para o carro\n";
 }
 
 void GameManager::processarCena(int escolha) {
-    if (escolha == 1) {
+    if(escolha == 1){
+        cena = CENA_DO_CRIME;
+        pistaHospital = true;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[CENA_SOCORRISTA]"),50);
+
+    } else if (escolha == 3) {
+        cena = CENA_DO_CRIME;
         std::cout << '\n';
         achouAgulha = true;
         printTypewriter(leitor.getTexto("[CENA_CHAO]"), 50);
     } else if (escolha == 2) {
-        cena = MAPA; 
-        vida = vida - 100;
+        cena = CENA_DO_CRIME; 
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[CENA_PARCEIRO]"), 50);
         vidaDetetive();
-    } else if (escolha == 3) {
+    } else if (escolha == 4) {
         cena = MAPA; 
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[GERAL_VOLTAR_CARRO]"), 50);
@@ -223,12 +279,18 @@ void GameManager::menuBar(){
 
 void GameManager::processarBar(int escolha) {
     if (escolha == 1) {
+        cena = BAR;
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[BAR_BARMEN_RUIM]"), 50);
     } else if (escolha == 2 && achouAgulha == true) {
-        cena = MAPA; 
+        cena = BAR; 
         std::cout << '\n';
         printTypewriter(leitor.getTexto("[BAR_BARMEN_BOM]"), 50);
+    }else if(escolha == 2 && achouAgulha == false){
+        cena = BAR;
+        std::cout << "\n";
+        printTypewriter(leitor.getTexto("[BAR_MEN_SEM_PISTA]"),50);
+
     } else if (escolha == 3) {
         cena = MAPA; 
         std::cout << '\n';

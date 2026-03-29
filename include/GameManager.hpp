@@ -9,7 +9,9 @@ enum CenarioJogo{
     HOSPITAL,
     CASA,
     CENA_DO_CRIME,
-    BAR
+    BAR,
+    PERSONAGENS
+
 };
 
 class GameManager {
@@ -21,6 +23,8 @@ private:
     bool isRunning;
     bool achouAgulha;
     bool pegouCracha;
+    bool pegouDistintivo;
+    bool pistaHospital;
     TextLoader leitor;
     int vida;
     
@@ -33,6 +37,8 @@ private:
     void limpaTerminal();
 
     void exibirIntroducao();
+    void exibirPersonagens();
+    void processarPersonagens(int escolha);
 
     void menuMapa();
     void processarMapa(int escolha);
